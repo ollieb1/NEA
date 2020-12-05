@@ -1,4 +1,4 @@
-package com.oblair.nea.bond.domain;
+package com.oblair.nea.application.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@SuppressWarnings("serial")
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(

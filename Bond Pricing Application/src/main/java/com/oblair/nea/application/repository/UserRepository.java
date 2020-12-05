@@ -1,4 +1,4 @@
-package com.oblair.nea.bond.repository;
+package com.oblair.nea.application.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.oblair.nea.bond.domain.User;
+import com.oblair.nea.application.domain.User;
 
 
 @Repository

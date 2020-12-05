@@ -1,4 +1,4 @@
-package com.oblair.nea.bond;
+package com.oblair.nea.application;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

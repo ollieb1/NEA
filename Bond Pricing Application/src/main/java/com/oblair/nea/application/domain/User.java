@@ -1,4 +1,4 @@
-package com.oblair.nea.bond.domain;
+package com.oblair.nea.application.domain;
 
 import java.util.HashSet;
 import java.util.Set;

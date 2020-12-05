@@ -1,4 +1,4 @@
-package com.oblair.nea.bond.domain;
+package com.oblair.nea.application.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
