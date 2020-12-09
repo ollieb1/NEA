@@ -28,7 +28,7 @@ import org.hibernate.annotations.NaturalId;
             "email"
         })
 })
-public class User extends Audit {
+public class User extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
