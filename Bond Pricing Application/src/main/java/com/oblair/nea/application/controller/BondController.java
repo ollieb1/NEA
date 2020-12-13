@@ -1,12 +1,17 @@
 package com.oblair.nea.application.controller;
 
 import java.net.URI;
+import java.util.Collections;
 
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.oblair.nea.application.domain.Bond;
+import com.oblair.nea.application.exception.ResourceNotFoundException;
 import com.oblair.nea.application.repository.BondRepository;
-import com.oblair.nea.application.repository.CurveRepository;
-import com.oblair.nea.application.repository.UserRepository;
-import com.oblair.nea.application.request.BondRequest;
 import com.oblair.nea.application.response.ApiResponse;
-import com.oblair.nea.application.response.BondResponse;
 import com.oblair.nea.application.response.PagedResponse;
-import com.oblair.nea.application.security.CurrentUser;
-import com.oblair.nea.application.security.UserAuthority;
 import com.oblair.nea.application.service.BondService;
 
 @RestController
@@ -38,27 +38,32 @@ public class BondController {
     private BondRepository bondRepository;
 
     @Autowired
-    private CurveRepository curveRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private BondService bondService;
 
     private static final Logger logger = LoggerFactory.getLogger(BondController.class);
 
     @GetMapping
-    public PagedResponse<BondResponse> getPolls(@CurrentUser UserAuthority currentUser,
-                                                @RequestParam(value = "page", defaultValue = "0") int page,
-                                                @RequestParam(value = "size", defaultValue = "30") int size) {
-        return bondService.getAllBonds(currentUser, page, size);
+    public PagedResponse<Bond> getBonds(@RequestParam(value = "page", defaultValue = "0") int page,
+                                        @RequestParam(value = "size", defaultValue = "30") int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "isin");
+        Page<Bond> bonds = bondRepository.findAll(pageable);
+
+        if(bonds.getNumberOfElements() == 0) {
+            return new PagedResponse<>(Collections.emptyList(), bonds.getNumber(),
+                    bonds.getSize(), bonds.getTotalElements(), bonds.getTotalPages(), bonds.isLast());
+        }
+
+        return new PagedResponse<>(bonds.getContent(), bonds.getNumber(),
+                bonds.getSize(), bonds.getTotalElements(), bonds.getTotalPages(), bonds.isLast());
+
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> createBond(@Valid @RequestBody BondRequest bondRequest) {
-        Bond bond = bondService.createBond(bondRequest);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createBond(@Valid @RequestBody Bond bond) {
+        
+        bond = bondRepository.save(bond);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{bondId}").buildAndExpand(bond.getId()).toUri();
 
@@ -66,9 +71,10 @@ public class BondController {
     }
 
     @GetMapping("/{bondId}")
-    public BondResponse getPollById(@CurrentUser UserAuthority currentUser,
-                                    @PathVariable Long bondId) {
-        return bondService.getBondById(bondId, currentUser);
+    @PreAuthorize("hasRole('USER')")
+    public Bond getBondById(@PathVariable Long bondId) {
+        
+        return bondRepository.findById(bondId).orElseThrow(() -> new ResourceNotFoundException("Bond", "id", bondId));
     }
 
 }

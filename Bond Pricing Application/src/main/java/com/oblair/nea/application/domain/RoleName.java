@@ -1,6 +1,6 @@
 package com.oblair.nea.application.domain;
 
 public enum  RoleName {
-    USER,
-    ADMIN
+    ROLE_USER,
+    ROLE_ADMIN
 }

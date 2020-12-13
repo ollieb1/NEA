@@ -1,7 +1,5 @@
 package com.oblair.nea.application.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,17 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oblair.nea.application.domain.User;
 import com.oblair.nea.application.exception.ResourceNotFoundException;
-import com.oblair.nea.application.repository.BondRepository;
-import com.oblair.nea.application.repository.CurveRepository;
 import com.oblair.nea.application.repository.UserRepository;
-import com.oblair.nea.application.response.BondResponse;
-import com.oblair.nea.application.response.PagedResponse;
 import com.oblair.nea.application.response.UserIdentityAvailability;
 import com.oblair.nea.application.response.UserProfile;
 import com.oblair.nea.application.response.UserSummary;
 import com.oblair.nea.application.security.CurrentUser;
 import com.oblair.nea.application.security.UserAuthority;
-import com.oblair.nea.application.service.BondService;
 
 @RestController
 @RequestMapping("/api")
@@ -30,17 +23,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private BondRepository bondRepository;
-
-    @Autowired
-    private CurveRepository curveRepository;
-    
-    @Autowired
-    private BondService bondService;
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")

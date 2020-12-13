@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.oblair.nea.application.domain.Role;
 import com.oblair.nea.application.domain.RoleName;
 import com.oblair.nea.application.domain.User;
+import com.oblair.nea.application.exception.AppException;
 import com.oblair.nea.application.repository.RoleRepository;
 import com.oblair.nea.application.repository.UserRepository;
 import com.oblair.nea.application.request.LoginRequest;
@@ -80,7 +81,7 @@ public class AuthenticationController {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role userRole = roleRepository.findByName(RoleName.USER).orElseThrow(() -> new AppException("User Role not set."));
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User Role not set."));
 
         user.setRoles(Collections.singleton(userRole));
 

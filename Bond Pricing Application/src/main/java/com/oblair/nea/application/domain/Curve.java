@@ -20,6 +20,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Curve")
@@ -38,8 +40,13 @@ public class Curve extends UserAudit {
     private String name;
 
     @NotBlank
+    @Size(min = 3, max = 3)
+    private String currency;
+
+    @NotNull
     private InterpolationType type;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "curve", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @Fetch(FetchMode.SELECT)
     private List<CurvePoint> points = new ArrayList<>();
@@ -52,11 +59,44 @@ public class Curve extends UserAudit {
         this.id = id;
     }
 
+    public Date getCurveDate() {
+        return curveDate;
+    }
+
+    public void setCurveDate(Date curveDate) {
+        this.curveDate = curveDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public InterpolationType getType() {
+        return type;
+    }
+
+    public void setType(InterpolationType type) {
+        this.type = type;
+    }
+
     public List<CurvePoint> getPoints() {
         return points;
     }
 
     public void setPoints(List<CurvePoint> points) {
+        points.stream().forEach(p -> p.setCurve(this));
         this.points = points;
     }
     

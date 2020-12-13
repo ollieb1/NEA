@@ -8,13 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "Bond")
+@Table(name = "Bond", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "isin" })
+})
 public class Bond extends UserAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +31,13 @@ public class Bond extends UserAudit {
     @Size(min = 3, max = 3)
     private String currency;
 
-    @NotBlank
+    @NotNull
     private Double coupon;
 
-    @NotBlank
+    @NotNull
     private Frequency frequency;
     
-    @NotBlank 
+    @NotNull
     private DayCount dayCount;
 
     @NotNull
@@ -45,11 +48,9 @@ public class Bond extends UserAudit {
     @Basic
     private Date maturityDate;
 
-    @NotNull
     @Basic
     private Date stubStartDate;
 
-    @NotNull
     @Basic
     private Date stubEndDate;
 
@@ -131,6 +132,19 @@ public class Bond extends UserAudit {
 
     public void setStubEndDate(Date stubEndDate) {
         this.stubEndDate = stubEndDate;
+    }
+
+    @Override
+    public int hashCode() {
+        
+        return getIsin().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (!(obj instanceof Bond)) return false;
+        return getIsin().equals(((Bond)obj).getIsin());
     }
 
 }
