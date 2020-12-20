@@ -5,6 +5,8 @@ import { ACCESS_TOKEN } from './constants';
 import { getCurrentUser } from './rest/APICalls';
 
 import LoadingIndicator from './common/LoadingIndicator';
+import Login from './Login';
+import Profile from './Profile';
 
 import './App.css';
 import AppHeader from './AppHeader';
@@ -60,14 +62,14 @@ class App extends Component {
     this.props.history.push(redirectTo);
     
     notification[notificationType]({
-      message: 'Bond Pricing App',
+      message: 'Bond Pricing Application',
       description: description,
     });
   }
 
   handleLogin() {
     notification.success({
-      message: 'Bond Pricing App',
+      message: 'Bond Pricing Application',
       description: "You're successfully logged in.",
     });
     this.loadCurrentUser();
@@ -88,8 +90,8 @@ class App extends Component {
             <div className="container">
               <Switch>      
                 <Route path="/login" 
-                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
-                <Route path="/signup" component={Signup}></Route>
+                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}>
+                </Route>
                 <Route path="/users/:username" 
                   render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
                 </Route>
