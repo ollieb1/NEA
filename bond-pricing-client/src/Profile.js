@@ -67,28 +67,26 @@ class Profile extends Component {
             return <ServerError />;
         }
 
-       return (
-            <div className="profile">
-                { 
-                    this.state.user ? (
-                        <div className="user-profile">
-                            <div className="user-details">
-                                <div className="user-avatar">
-                                    <Avatar className="user-avatar-circle" >
-                                        {this.state.user.name[0].toUpperCase()}
-                                    </Avatar>
-                                </div>
-                                <div className="user-summary">
-                                    <div className="full-name">{this.state.user.name}</div>
-                                    <div className="username">@{this.state.user.username}</div>
-                                    <div className="user-joined">
-                                        Joined {this.state.user.joinedAt}
-                                    </div>
+        return (
+            <div className="profile"> { 
+                this.state.user ? (
+                    <div className="user-profile">
+                        <div className="user-details">
+                            <div className="user-avatar">
+                                <Avatar className="user-avatar-circle" >
+                                    {this.state.user.name[0].toUpperCase()}
+                                </Avatar>
+                            </div>
+                            <div className="user-summary">
+                                <div className="full-name">{this.state.user.name}</div>
+                                <div className="username">@{this.state.user.username}</div>
+                                <div className="user-joined">
+                                    Joined {this.state.user.joinedAt}
                                 </div>
                             </div>
-                        </div>  
-                    ) : null               
-                }
+                        </div>
+                    </div>  
+                ) : null }
             </div>
         );
     }

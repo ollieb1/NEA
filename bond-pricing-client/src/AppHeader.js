@@ -7,6 +7,16 @@ import 'antd/dist/antd.css';
 import './AppHeader.css';
 
 class AppHeader extends Component {
+    constructor(props) {
+        super(props);   
+        this.handleMenuClick = this.handleMenuClick.bind(this);   
+    }
+
+    handleMenuClick({ key }) {
+      if(key === "logout") {
+        this.props.onLogout();
+      }
+    }
 
     render() {
         let menuItems;
@@ -53,25 +63,25 @@ class AppHeader extends Component {
 }
 
 const ProfileDropdownMenu = (props) => {
-
+    
     const dropdownMenu = (
         <Menu onClick={props.handleMenuClick} className="profile-dropdown-menu">
-            <Menu.Item key="user-info" className="dropdown-item" disabled>
-                <div className="user-full-name-info">
-                    {props.currentUser.name}
-                </div>
-                <div className="username-info">
-                    @{props.currentUser.username}
-                </div>
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="profile" className="dropdown-item">
-                <Link to={`/users/${props.currentUser.username}`}>Profile</Link>
-            </Menu.Item>
-            <Menu.Item key="logout" className="dropdown-item">
-                Logout
-            </Menu.Item>
-        </Menu>
+        <Menu.Item key="user-info" disabled>
+            <div className="user-full-name-info">
+                {props.currentUser.name}
+            </div>
+            <div className="username-info">
+                @{props.currentUser.username}
+            </div>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="profile">
+            Profile
+        </Menu.Item>
+        <Menu.Item key="logout">
+            Logout
+        </Menu.Item>
+      </Menu>
     );
   
     return (
@@ -79,7 +89,7 @@ const ProfileDropdownMenu = (props) => {
             overlay={dropdownMenu} 
             trigger={['click']}
             getPopupContainer = { () => document.getElementsByClassName('profile-menu')[0]}>
-            <a className="ant-dropdown-link">
+            <a href="#/" className="ant-dropdown-link">
                 <UserOutlined style={{marginRight: 0}} /> <DownOutlined />
             </a>
         </Dropdown>
