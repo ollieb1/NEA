@@ -54,13 +54,15 @@ class LoginForm extends Component {
                     name='usernameOrEmail' rules={[{ required: true, message: 'Please input your username or email!'}]}>
                     <Input 
                         prefix={<UserOutlined />}
-                        size="large" />    
+                        size="large" 
+                        placeholder="Username" /> 
                 </Form.Item>
                 <Form.Item
                     name='password' rules={[{ required: true, message: 'Please input your Password!'}]}>
                     <Input.Password
                         prefix={<LockOutlined />}
-                        size="large" />                        
+                        size="large"
+                        placeholder="Password" />                        
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" size="large" className="login-form-button">Login</Button>

@@ -70,3 +70,10 @@ export function getUserProfile(username) {
         method: 'GET'
     });
 }
+
+export function getAllBonds(page, size) {
+    return request({
+        url: `${API_BASE_URL}/bonds?page=${page - 1}&size=${size}`,
+        method: 'GET'
+    });
+}
