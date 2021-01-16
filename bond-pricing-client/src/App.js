@@ -8,6 +8,7 @@ import LoadingIndicator from './common/LoadingIndicator';
 import Login from './Login';
 import Profile from './Profile';
 import BondTable from './BondTable';
+import BondInfo from './BondInfo';
 
 import './App.css';
 import AppHeader from './AppHeader';
@@ -90,9 +91,13 @@ class App extends Component {
         <Content className="app-content">
             <div className="container">
               <Switch>      
-              <Route exact path="/" 
+                <Route exact path="/" 
                   render={(props) => <BondTable isAuthenticated={this.state.isAuthenticated} 
                       currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
+                </Route>
+                <Route exact path="/bond/:id" 
+                  render={(props) => <BondInfo isAuthenticated={this.state.isAuthenticated} 
+                      currentUser={this.state.currentUser} {...props} />}>
                 </Route>
                 <Route path="/login" 
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}>

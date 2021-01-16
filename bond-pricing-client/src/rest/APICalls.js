@@ -77,3 +77,10 @@ export function getAllBonds(page, size) {
         method: 'GET'
     });
 }
+
+export function getBond(id) {
+    return request({
+        url: `${API_BASE_URL}/bonds/${id}`,
+        method: 'GET'
+    });
+}

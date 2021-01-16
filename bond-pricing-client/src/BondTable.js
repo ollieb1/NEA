@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { BOND_LIST_SIZE } from './constants';
 import { getAllBonds } from './rest/APICalls';
-import { Table } from 'antd';
+import { Table, Space } from 'antd';
+
 
 const columns = [
     {
@@ -24,6 +25,25 @@ const columns = [
       title: 'Frequency',
       dataIndex: 'frequency',
       key: 'frequency',
+    },
+    {
+      title: 'Issue Date',
+      dataIndex: 'issueDate',
+      key: 'issueDate',
+    },
+    {
+      title: 'Maturity Date',
+      dataIndex: 'maturityDate',
+      key: 'maturityDate',
+    },
+    {
+        title: 'Action',
+        key: 'action',
+        render: (text, row) => (
+            <Space size="middle">
+                <Link to={`/bond/${row.id}`}>Select...</Link>
+            </Space>
+        ),
     },
   ];
 
