@@ -24,10 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.oblair.nea.application.domain.Bond;
+import com.oblair.nea.application.domain.Curve;
 import com.oblair.nea.application.exception.ResourceNotFoundException;
 import com.oblair.nea.application.repository.BondRepository;
+import com.oblair.nea.application.repository.CurveRepository;
+import com.oblair.nea.application.request.PriceRequest;
 import com.oblair.nea.application.response.ApiResponse;
 import com.oblair.nea.application.response.PagedResponse;
+import com.oblair.nea.application.response.PriceResponse;
 import com.oblair.nea.application.service.BondService;
 
 @RestController
@@ -37,6 +41,9 @@ public class BondController {
     @Autowired
     private BondRepository bondRepository;
 
+    @Autowired
+    private CurveRepository curveRepository;
+    
     @Autowired
     private BondService bondService;
 
@@ -77,4 +84,29 @@ public class BondController {
         return bondRepository.findById(bondId).orElseThrow(() -> new ResourceNotFoundException("Bond", "id", bondId));
     }
 
+    @PostMapping("/price")
+    @PreAuthorize("hasRole('USER')")
+    public PriceResponse priceBond(@Valid @RequestBody PriceRequest priceRequest) {
+        
+        Bond bond = getBondFromPriceRequest(priceRequest);
+        
+        Curve curve = curveRepository.findByCurveDateAndCurrency(priceRequest.getValuationDate(), priceRequest.getCurrency()).orElseThrow(
+                () -> new ResourceNotFoundException("Curve", "curveDate", priceRequest.getValuationDate(), "currency", priceRequest.getCurrency()));
+        
+        return bondService.price(bond, curve);
+    }
+
+    public Bond getBondFromPriceRequest(PriceRequest request) {
+        Bond bond = new Bond();
+        bond.setIsin(request.getIsin());
+        bond.setCurrency(request.getCurrency());
+        bond.setCoupon(request.getCoupon());
+        bond.setFrequency(request.getFrequency());
+        bond.setDayCount(request.getDayCount());
+        bond.setIssueDate(request.getIssueDate());
+        bond.setMaturityDate(request.getMaturityDate());
+        bond.setStubStartDate(request.getStubStartDate());
+        bond.setStubEndDate(request.getStubEndDate());
+        return bond;
+    }
 }

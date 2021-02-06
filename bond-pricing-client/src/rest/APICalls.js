@@ -84,3 +84,11 @@ export function getBond(id) {
         method: 'GET'
     });
 }
+
+export function price(priceRequest) {
+    return request({
+        url: `${API_BASE_URL}/bonds/price`,
+        method: 'POST',
+        body: JSON.stringify(priceRequest)
+    });
+}

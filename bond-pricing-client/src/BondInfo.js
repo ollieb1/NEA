@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Form, Input, Button, Select, DatePicker, InputNumber } from 'antd';
-import { getBond } from './rest/APICalls';
-import moment from 'moment';
+import { Divider, Form, Input, Button, Select, DatePicker, InputNumber,
+    Row, Col, notification } from 'antd';
+import { getBond, price } from './rest/APICalls';
+import moment from 'moment';    
 
 class BondInfo extends Component {
     
@@ -58,12 +59,28 @@ class BondInfo extends Component {
         this.loadBond(id);
     }
 
-    render() {
+    handleSubmit(values) {
+        const priceRequest = Object.assign({}, values);
+        price(priceRequest)
+        .then(response => {
+            notification.error({
+                message: response.price,
+                description: 'TODO'
+            }); 
+            
+        }).catch(error => {
+            notification.error({
+                    message: 'TODO - something went wrong',
+                    description: 'TODO - something went wrong'
+            });                            
+        });
+    }
 
+    render() {
         return (
             <Form ref={this.formRef}
                 labelCol={{ span: 5 }}
-                wrapperCol={{ span: 10 }}
+                wrapperCol={{ span: 14 }}
                 layout="horizontal"
                 onFinish={this.handleSubmit} className="bond-form">
                 <Form.Item name="isin" label="Isin">
@@ -97,17 +114,51 @@ class BondInfo extends Component {
                         <Select.Option value="ACT365">Act/365</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item name="issueDate" label="Issue Date">
-                    <DatePicker />
+                <Form.Item label="Issue Date" >
+                    <Row gutter={8}>
+                        <Col span={6}>
+                            <Form.Item name="issueDate" >
+                                <DatePicker />
+                            </Form.Item>
+                        </Col>
+                        <Col span={2}/>
+                        <Col span={12}>
+                            <Form.Item name="maturityDate" label="Maturity Date">
+                                <DatePicker />
+                            </Form.Item>
+                        </Col>
+                    </Row>        
                 </Form.Item>
-                <Form.Item name="maturityDate" label="Maturity Date">
-                    <DatePicker />
+                <Form.Item label="First Coupon Date" >
+                    <Row gutter={8}>
+                        <Col span={6}>
+                            <Form.Item name="stubStartDate" >
+                                <DatePicker />
+                            </Form.Item>
+                        </Col>
+                        <Col span={2}/>
+                        <Col span={14}>
+                            <Form.Item name="stubEndDate" label="Penultimate Coupon Date">
+                                <DatePicker />
+                            </Form.Item>
+                        </Col>
+                    </Row>        
                 </Form.Item>
-                <Form.Item name="stubStartDate" label="First Coupon Date">
-                    <DatePicker />
-                </Form.Item>
-                <Form.Item name="stubEndDate" label="Penultimate Coupon Date">
-                    <DatePicker />
+                <Divider />
+                <Form.Item label="Valuation Date">
+                    <Row gutter={8}>
+                        <Col span={6}>
+                            <Form.Item name="valuationDate" noStyle rules={[{ required: true}]}>
+                                <DatePicker />
+                            </Form.Item>
+                        </Col>
+                        <Col span={2}>
+                            <Button type="primary" htmlType="submit">
+                                Price
+                            </Button>
+                        </Col>
+                        <Col span={8}/>
+                    </Row>
                 </Form.Item>
             </Form>
         );

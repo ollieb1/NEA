@@ -17,6 +17,8 @@ public interface CurveRepository extends JpaRepository<Curve, Long> {
     
     Optional<Curve> findById(Long curveId);
     
+    Optional<Curve> findByCurveDateAndCurrency(Date curveDate, String currency);
+    
     Page<Curve> findByCurveDate(Date curveDate, Pageable pageable);
 
     List<Curve> findByIdIn(List<Long> curveIds);
