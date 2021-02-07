@@ -5,6 +5,8 @@ import { Divider, Form, Input, Button, Select, DatePicker, InputNumber,
 import { getBond, price } from './rest/APICalls';
 import moment from 'moment';    
 
+import { LineChart, Line, XAxis, YAxis, Legend, Tooltip, BarChart, Bar} from "recharts";
+
 class BondInfo extends Component {
     
     formRef = React.createRef();
@@ -12,9 +14,12 @@ class BondInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          curve: [],
+          cashflows: [],
           isLoading: false,
         };
         this.loadBond = this.loadBond.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     loadBond(id) {
@@ -63,11 +68,11 @@ class BondInfo extends Component {
         const priceRequest = Object.assign({}, values);
         price(priceRequest)
         .then(response => {
-            notification.error({
-                message: response.price,
-                description: 'TODO'
-            }); 
-            
+            this.setState( {
+                curve: response.curve.points,
+                cashflows: response.cashFlows
+            })
+                           
         }).catch(error => {
             notification.error({
                     message: 'TODO - something went wrong',
@@ -77,6 +82,7 @@ class BondInfo extends Component {
     }
 
     render() {
+        const { curve, cashflows } = this.state;
         return (
             <Form ref={this.formRef}
                 labelCol={{ span: 5 }}
@@ -160,6 +166,34 @@ class BondInfo extends Component {
                         <Col span={8}/>
                     </Row>
                 </Form.Item>
+                <Divider />
+                <LineChart width={800} height={400} data={curve}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <XAxis dataKey="offset" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="rate" stroke="#8884d8" />
+                </LineChart>
+                <Divider />
+                <BarChart width={800} height={400} data={cashflows}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Bar
+                        stackId="a"
+                        dataKey="discountedAmount"
+                        name="Discounted Cashflows"
+                        fill="#7DB3FF"
+                      />
+                      <Bar
+                        stackId="b"
+                        dataKey="amount"
+                        name="Cashflows"
+                        fill="#49457B"
+                      />
+                      <Legend />
+                      <Tooltip />
+                </BarChart>
             </Form>
         );
     }

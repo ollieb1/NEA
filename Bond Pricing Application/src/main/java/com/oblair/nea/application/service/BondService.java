@@ -56,6 +56,7 @@ public class BondService {
             flow.setDate(Date.valueOf(date));
             flow.setRate(rate);
             flow.setDiscountFactor(Math.pow(1 + rate / bond.getDivisor(), -bond.getDivisor() * offset / 365));
+            flow.setDiscountedAmount(flow.getDiscountFactor() * flow.getAmount());
             return flow;
             
         }).collect(Collectors.toList());

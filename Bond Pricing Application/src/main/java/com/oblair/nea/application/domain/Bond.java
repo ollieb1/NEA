@@ -13,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.oblair.nea.application.request.PriceRequest;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Bond", uniqueConstraints = {
@@ -147,4 +149,21 @@ public class Bond extends UserAudit {
         return getIsin().equals(((Bond)obj).getIsin());
     }
 
+    public Double getDivisor() {
+
+        double divisor = 1;
+        switch (getFrequency()) {
+        case QUARTERLY:
+            divisor = 4;
+            break;
+        case SEMIANNUALLY:
+            divisor = 2;
+            break;
+        case ANNUALLY:
+            divisor = 1;
+            break;
+        }
+        return divisor;
+    }
+    
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { login } from './rest/APICalls';
 import './Login.css';
-import { Link } from 'react-router-dom';
 import { ACCESS_TOKEN } from './constants';
 
 import { Form, Input, Button, notification } from 'antd';

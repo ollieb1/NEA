@@ -6,6 +6,7 @@ public class CashFlow {
     
     private Date date;
     private double amount;
+    private double discountedAmount;
     private double rate;
     private double discountFactor;
     
@@ -20,6 +21,12 @@ public class CashFlow {
     }
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+    public double getDiscountedAmount() {
+        return discountedAmount;
+    }
+    public void setDiscountedAmount(double discountedAmount) {
+        this.discountedAmount = discountedAmount;
     }
     public double getRate() {
         return rate;
