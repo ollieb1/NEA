@@ -5,7 +5,7 @@ import { Divider, Form, Input, Button, Select, DatePicker, InputNumber,
 import { getBond, price } from './rest/APICalls';
 import moment from 'moment';    
 
-import { LineChart, Line, XAxis, YAxis, Legend, Tooltip, BarChart, Bar} from "recharts";
+import { LineChart, Line, XAxis, YAxis, Legend, Tooltip, BarChart, Bar, ResponsiveContainer} from "recharts";
 
 class BondInfo extends Component {
     
@@ -16,6 +16,7 @@ class BondInfo extends Component {
         this.state = {
           curve: [],
           cashflows: [],
+          price: 0,
           isLoading: false,
         };
         this.loadBond = this.loadBond.bind(this);
@@ -70,7 +71,8 @@ class BondInfo extends Component {
         .then(response => {
             this.setState( {
                 curve: response.curve.points,
-                cashflows: response.cashFlows
+                cashflows: response.cashFlows,
+                price: response.price
             })
                            
         }).catch(error => {
@@ -82,7 +84,7 @@ class BondInfo extends Component {
     }
 
     render() {
-        const { curve, cashflows } = this.state;
+        const { curve, cashflows, price } = this.state;
         return (
             <Form ref={this.formRef}
                 labelCol={{ span: 5 }}
@@ -167,16 +169,10 @@ class BondInfo extends Component {
                     </Row>
                 </Form.Item>
                 <Divider />
-                <LineChart width={800} height={400} data={curve}
+                <p >Bond price is {price}</p>
+                <ResponsiveContainer width={800} height={400} 
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <XAxis dataKey="offset" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="rate" stroke="#8884d8" />
-                </LineChart>
-                <Divider />
-                <BarChart width={800} height={400} data={cashflows}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
+                    <BarChart data={cashflows}>
                       <XAxis dataKey="date" />
                       <YAxis />
                       <Bar
@@ -193,7 +189,17 @@ class BondInfo extends Component {
                       />
                       <Legend />
                       <Tooltip />
-                </BarChart>
+                    </BarChart>
+                </ResponsiveContainer>
+                <Divider />
+                <LineChart width={800} height={400} data={curve}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <XAxis dataKey="offset" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="rate" stroke="#8884d8" />
+                    <Legend />
+                </LineChart>
             </Form>
         );
     }
