@@ -149,7 +149,7 @@ public class Bond extends UserAudit {
         return getIsin().equals(((Bond)obj).getIsin());
     }
 
-    public Double getDivisor() {
+    public double getDivisor() {
 
         double divisor = 1;
         switch (getFrequency()) {
@@ -164,6 +164,15 @@ public class Bond extends UserAudit {
             break;
         }
         return divisor;
+    }
+    
+    public double getDaysInYear() {
+        
+        double days = 365;
+        if (DayCount.ACT360 == getDayCount()) {
+            days = 360;
+        }
+        return days;
     }
     
 }

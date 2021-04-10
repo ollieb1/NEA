@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Divider, Form, Input, Button, Select, DatePicker, InputNumber,
-    Row, Col, notification } from 'antd';
+import { Divider, Form, Input, Button, Select, DatePicker, InputNumber, Row, Col, notification } from 'antd';
 import { getBond, price } from './rest/APICalls';
 import moment from 'moment';    
 
@@ -137,22 +136,6 @@ class BondInfo extends Component {
                         </Col>
                     </Row>        
                 </Form.Item>
-                <Form.Item label="First Coupon Date" >
-                    <Row gutter={8}>
-                        <Col span={6}>
-                            <Form.Item name="stubStartDate" >
-                                <DatePicker />
-                            </Form.Item>
-                        </Col>
-                        <Col span={2}/>
-                        <Col span={14}>
-                            <Form.Item name="stubEndDate" label="Penultimate Coupon Date">
-                                <DatePicker />
-                            </Form.Item>
-                        </Col>
-                    </Row>        
-                </Form.Item>
-                <Divider />
                 <Form.Item label="Valuation Date">
                     <Row gutter={8}>
                         <Col span={6}>

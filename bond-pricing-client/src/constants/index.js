@@ -1,7 +1,7 @@
 export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 export const ACCESS_TOKEN = 'accessToken';
 
-export const BOND_LIST_SIZE = 3;
+export const BOND_LIST_SIZE = 8;
 
 export const NAME_MIN_LENGTH = 4;
 export const NAME_MAX_LENGTH = 40;

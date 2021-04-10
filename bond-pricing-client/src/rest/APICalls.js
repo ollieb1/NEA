@@ -92,3 +92,11 @@ export function price(priceRequest) {
         body: JSON.stringify(priceRequest)
     });
 }
+
+export function add(addRequest) {
+    return request({
+        url: `${API_BASE_URL}/bonds/`,
+        method: 'POST',
+        body: JSON.stringify(addRequest)
+    });
+}

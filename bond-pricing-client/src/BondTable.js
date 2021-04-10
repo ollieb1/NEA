@@ -51,8 +51,8 @@ class BondTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            bonds: [],
             pagination: {
+              bonds:[],
               current: 1,
               pageSize: BOND_LIST_SIZE,
               total: 0

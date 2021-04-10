@@ -9,6 +9,8 @@ import Login from './Login';
 import Profile from './Profile';
 import BondTable from './BondTable';
 import BondInfo from './BondInfo';
+import AddBond from './Bond';
+
 
 import './App.css';
 import AppHeader from './AppHeader';
@@ -27,6 +29,7 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.bondAdded = this.bondAdded.bind(this);
 
     notification.config({
       placement: 'topRight',
@@ -61,7 +64,7 @@ class App extends Component {
       isAuthenticated: false
     });
 
-    this.props.history.push(redirectTo);
+    this.props.history.push("/login");
     
     notification[notificationType]({
       message: 'Bond Pricing Application',
@@ -77,6 +80,15 @@ class App extends Component {
     this.loadCurrentUser();
     this.props.history.push("/");
   }
+
+  bondAdded() {
+    notification.success({
+      message: 'Bond Pricing Application',
+      description: "Successfully added bond.",
+    });
+    this.props.history.push("/");
+  }
+
 
   render() {
     if(this.state.isLoading) {
@@ -98,6 +110,10 @@ class App extends Component {
                 <Route exact path="/bond/:id" 
                   render={(props) => <BondInfo isAuthenticated={this.state.isAuthenticated} 
                       currentUser={this.state.currentUser} {...props} />}>
+                </Route>
+                <Route exact path="/addbond" 
+                  render={(props) => <AddBond isAuthenticated={this.state.isAuthenticated} 
+                      currentUser={this.state.currentUser} {...props} bondAdded={this.bondAdded}/>} >
                 </Route>
                 <Route path="/login" 
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}>

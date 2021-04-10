@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Layout, Menu, Dropdown } from 'antd';
-import { HomeOutlined, UserOutlined, DownOutlined }  from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, DownOutlined, EditOutlined, LineChartOutlined, SlidersOutlined }  from '@ant-design/icons';
 
 import 'antd/dist/antd.css';
 import './AppHeader.css';
+
 
 class AppHeader extends Component {
     constructor(props) {
@@ -26,6 +27,11 @@ class AppHeader extends Component {
                     <Link to="/">
                         <HomeOutlined />
                     </Link>
+                </Menu.Item>,
+                <Menu.Item key="/add" className="add-menu">
+                        <AddDropdownMenu
+                            currentUser={this.props.currentUser} 
+                            handleMenuClick={this.handleMenuClick}/>
                 </Menu.Item>,
                 <Menu.Item key="/profile" className="profile-menu">
                     <ProfileDropdownMenu 
@@ -92,5 +98,27 @@ const ProfileDropdownMenu = (props) => {
         </Dropdown>
     );
   }
+
+const AddDropdownMenu = (props) => {
+    
+    const dropdownMenu = (
+        <Menu onClick={props.handleMenuClick} className="add-dropdown-menu">
+        <Menu.Item key="addbond">
+            <SlidersOutlined /> Bond
+            <Link to={`/addbond/`}></Link>
+        </Menu.Item>
+      </Menu>
+    );
   
+    return (
+        <Dropdown 
+            overlay={dropdownMenu} 
+            trigger={['click']}
+            getPopupContainer = { () => document.getElementsByClassName('add-menu')[0]}>
+            <a href="#/" className="ant-dropdown-link">
+                <EditOutlined style={{marginRight: 0}} /> <DownOutlined />
+            </a>
+        </Dropdown>
+    );
+  }
 export default withRouter(AppHeader);
