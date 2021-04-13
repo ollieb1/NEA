@@ -148,23 +148,6 @@ public class Bond extends UserAudit {
         if (!(obj instanceof Bond)) return false;
         return getIsin().equals(((Bond)obj).getIsin());
     }
-
-    public double getDivisor() {
-
-        double divisor = 1;
-        switch (getFrequency()) {
-        case QUARTERLY:
-            divisor = 4;
-            break;
-        case SEMIANNUALLY:
-            divisor = 2;
-            break;
-        case ANNUALLY:
-            divisor = 1;
-            break;
-        }
-        return divisor;
-    }
     
     public double getDaysInYear() {
         

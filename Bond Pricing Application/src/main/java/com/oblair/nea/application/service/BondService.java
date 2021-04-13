@@ -49,14 +49,15 @@ public class BondService {
 
             CashFlow flow = new CashFlow();
             if (date.equals(maturity)) {
-                flow.setAmount(100 + bond.getCoupon() / bond.getDivisor());
+                flow.setAmount(100 + bond.getCoupon() / bond.getFrequency().getDivisor());
             } else {
-                flow.setAmount(bond.getCoupon() / bond.getDivisor());
+                flow.setAmount(bond.getCoupon() / bond.getFrequency().getDivisor());
             }
             flow.setDate(Date.valueOf(date));
             flow.setRate(rate);
-            flow.setDiscountFactor(Math.pow(1 + rate / bond.getDivisor(), -bond.getDivisor() * offset / bond.getDaysInYear()));
+            flow.setDiscountFactor(Math.pow(1 + rate / curve.getFrequency().getDivisor(), -curve.getFrequency().getDivisor() * offset / bond.getDaysInYear()));
             flow.setDiscountedAmount(flow.getDiscountFactor() * flow.getAmount());
+            logger.info("offset: " + offset + " " + flow);
             return flow;
             
         }).collect(Collectors.toList());

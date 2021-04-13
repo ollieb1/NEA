@@ -44,6 +44,9 @@ public class Curve extends UserAudit {
     private String currency;
 
     @NotNull
+    private Frequency frequency;
+ 
+    @NotNull
     private InterpolationType type;
 
 //    @JsonManagedReference
@@ -81,6 +84,14 @@ public class Curve extends UserAudit {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public Frequency getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Frequency frequency) {
+        this.frequency = frequency;
     }
 
     public InterpolationType getType() {

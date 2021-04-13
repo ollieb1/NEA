@@ -40,5 +40,16 @@ public class CashFlow {
     public void setDiscountFactor(double discountFactor) {
         this.discountFactor = discountFactor;
     }
+    
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("date: ").append(date).append(" ");
+        sb.append("amount: ").append(amount).append(" ");
+        sb.append("discountedAmount: ").append(discountedAmount).append(" ");
+        sb.append("rate: ").append(rate).append(" ");
+        sb.append("discountFactor: ").append(discountFactor);
+        return sb.toString();
+    }
 
 }

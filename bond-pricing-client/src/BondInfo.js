@@ -35,8 +35,8 @@ class BondInfo extends Component {
                 coupon: response.coupon * 100,
                 frequency: response.frequency,
                 dayCount: response.dayCount,
-                issueDate: moment(response.issueDate),
-                maturityDate: moment(response.maturityDate),
+                issueDate: moment.utc(response.issueDate),
+                maturityDate: moment.utc(response.maturityDate),
                 stubStartDate: response.stubStartDate == null ? null : moment(response.stubStartDate),
                 stubEndDate: response.stubEndDate == null ? null : moment(response.stubEndDate),
 
