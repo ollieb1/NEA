@@ -1,12 +1,13 @@
 import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
 
+{/* Setting up api requests */}
 const request = (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
     })
-    
+
     if(localStorage.getItem(ACCESS_TOKEN)) {
-        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)) 
     }
 
     const defaults = {headers: headers};
@@ -23,6 +24,7 @@ const request = (options) => {
     );
 };
 
+{/* Login Request */}
 export function login(loginRequest) {
     return request({
         url: API_BASE_URL + "/auth/signin",
@@ -31,27 +33,6 @@ export function login(loginRequest) {
     });
 }
 
-export function signup(signupRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/signup",
-        method: 'POST',
-        body: JSON.stringify(signupRequest)
-    });
-}
-
-export function checkUsernameAvailability(username) {
-    return request({
-        url: API_BASE_URL + "/user/checkUsernameAvailability?username=" + username,
-        method: 'GET'
-    });
-}
-
-export function checkEmailAvailability(email) {
-    return request({
-        url: API_BASE_URL + "/user/checkEmailAvailability?email=" + email,
-        method: 'GET'
-    });
-}
 
 export function getCurrentUser() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
@@ -64,6 +45,7 @@ export function getCurrentUser() {
     });
 }
 
+{/* Gets users' profile */}
 export function getUserProfile(username) {
     return request({
         url: API_BASE_URL + "/users/" + username,
@@ -71,6 +53,7 @@ export function getUserProfile(username) {
     });
 }
 
+{/* Gets all bonds */}
 export function getAllBonds(page, size) {
     return request({
         url: `${API_BASE_URL}/bonds?page=${page - 1}&size=${size}`,
@@ -78,6 +61,7 @@ export function getAllBonds(page, size) {
     });
 }
 
+{/* Gets ID of a bond */}
 export function getBond(id) {
     return request({
         url: `${API_BASE_URL}/bonds/${id}`,
@@ -85,6 +69,7 @@ export function getBond(id) {
     });
 }
 
+{/* Price Request */}
 export function price(priceRequest) {
     return request({
         url: `${API_BASE_URL}/bonds/price`,
@@ -92,7 +77,7 @@ export function price(priceRequest) {
         body: JSON.stringify(priceRequest)
     });
 }
-
+{/* Add bond Request */}
 export function add(addRequest) {
     return request({
         url: `${API_BASE_URL}/bonds/`,

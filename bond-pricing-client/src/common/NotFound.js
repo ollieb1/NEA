@@ -3,6 +3,7 @@ import './NotFound.css';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 
+{/* If page not found return 404 error and prompt user to be returned to home page*/}
 class NotFound extends Component {
     render() {
         return (

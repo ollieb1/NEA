@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Form, Input, Button, Select, DatePicker, InputNumber, Row, Col, notification } from 'antd';
 import { add } from './rest/APICalls'; 
 
-
+{/* Handles the adding of a bond */}
 class AddBond extends Component {
 
     constructor(props) {
@@ -13,19 +13,20 @@ class AddBond extends Component {
     
     handleSubmit(values) {
         const addRequest = Object.assign({}, values);
-        addRequest.coupon /= 100;
+        addRequest.coupon /= 100; {/* Coupon displayed as percentage on screen so must divide by 100 */}
         add(addRequest)
         .then(response => {
             this.props.bondAdded();
         }).catch(error => {
             notification.error({
-                    message: 'TODO - something went wrong',
-                    description: 'TODO - something went wrong'
+                    message: 'Error',
+                    description: 'Something went wrong, please try again'
             });                            
         });
     }
 
     render() {
+        {/* Renders the form where the user can fill out the bond attributes */}
         return (
             <Form
                 labelCol={{ span: 5 }}

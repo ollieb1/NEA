@@ -14,7 +14,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
+/*
+ * Implements AuthenticationEntryPoint interface and provides the implementation for its commence() method. 
+ * This method is called whenever an exception is thrown due to an unauthenticated user trying to access 
+ * a resource that requires authentication. 
+ */
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
     @Override
     public void commence(HttpServletRequest httpServletRequest,

@@ -21,10 +21,11 @@ import com.oblair.nea.application.security.JwtAuthenticationFilter;
 import com.oblair.nea.application.security.UserDetailsBondService;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+@EnableWebSecurity // primary spring security annotation that is used to enable web security 
+@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true) // enables method level security
 
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter { 
+    // implements Spring's Security interface
 	@Autowired
 	UserDetailsBondService userDetailsService;
 
@@ -62,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/bonds/**", "/api/users/**").permitAll().anyRequest().authenticated();
 
-		// Add our custom JWT security filter
+		// Add custom JWT security filter
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 	}

@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class SignUpRequest {
+    //Handles the sign-up request.
     @NotBlank
     @Size(min = 4, max = 60)
     private String name;

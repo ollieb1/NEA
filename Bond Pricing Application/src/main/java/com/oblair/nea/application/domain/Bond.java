@@ -13,8 +13,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.oblair.nea.application.request.PriceRequest;
-
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Bond", uniqueConstraints = {

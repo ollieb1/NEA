@@ -31,6 +31,7 @@ class App extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.bondAdded = this.bondAdded.bind(this);
 
+    {/* Notification attributes */}
     notification.config({
       placement: 'topRight',
       top: 70,
@@ -64,6 +65,7 @@ class App extends Component {
       isAuthenticated: false
     });
 
+    {/* Takes user to login page after logging out*/}
     this.props.history.push("/login");
     
     notification[notificationType]({
@@ -94,6 +96,7 @@ class App extends Component {
     if(this.state.isLoading) {
       return <LoadingIndicator />
     }
+    {/* Renders the different paths */}
     return (
       <Layout className="app-container">
         <AppHeader isAuthenticated={this.state.isAuthenticated} 

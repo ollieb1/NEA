@@ -31,7 +31,7 @@ import com.oblair.nea.application.response.PagedResponse;
 @RestController
 @RequestMapping("/api/curves")
 public class CurveController {
-
+//Contains APIs for curves.
     @Autowired
     private CurveRepository curveRepository;
 
@@ -55,7 +55,7 @@ public class CurveController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createCurve(@Valid @RequestBody Curve curve) {
-        
+        //if user has ADMIN role creates curve 
         curve = curveRepository.save(curve);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{curveId}").buildAndExpand(curve.getId()).toUri();
@@ -66,7 +66,7 @@ public class CurveController {
     @GetMapping("/{curveId}")
     @PreAuthorize("hasRole('USER')")
     public Curve getCurveById(@PathVariable Long curveId) {
-        
+        //returns curve if found if not exception thrown
         return curveRepository.findById(curveId).orElseThrow(() -> new ResourceNotFoundException("Curve", "id", curveId));
     }
 

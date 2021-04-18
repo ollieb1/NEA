@@ -10,7 +10,7 @@ import com.oblair.nea.application.domain.DayCount;
 import com.oblair.nea.application.domain.Frequency;
 
 public class PriceRequest {
-
+//Handles the price request received from the front-end client
     @NotBlank
     private String isin;
     

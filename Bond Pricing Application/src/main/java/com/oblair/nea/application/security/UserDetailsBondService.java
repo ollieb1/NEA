@@ -12,7 +12,7 @@ import com.oblair.nea.application.repository.UserRepository;
 
 @Service
 public class UserDetailsBondService implements UserDetailsService {
-
+//loads a user’s data given its username 
     @Autowired
     UserRepository userRepository;
 

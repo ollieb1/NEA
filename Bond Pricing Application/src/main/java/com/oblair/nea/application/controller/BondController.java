@@ -37,7 +37,7 @@ import com.oblair.nea.application.service.BondService;
 @RestController
 @RequestMapping("/api/bonds")
 public class BondController {
-
+//Contains APIs for getting bonds, bond creation, pricing bond.
     @Autowired
     private BondRepository bondRepository;
 
@@ -77,25 +77,27 @@ public class BondController {
         return ResponseEntity.created(location).body(new ApiResponse(true, "Bond Created Successfully"));
     }
 
+    //gets the bond for a given bondId
     @GetMapping("/{bondId}")
     @PreAuthorize("hasRole('USER')")
     public Bond getBondById(@PathVariable Long bondId) {
         
         return bondRepository.findById(bondId).orElseThrow(() -> new ResourceNotFoundException("Bond", "id", bondId));
     }
-
+    
     @PostMapping("/price")
     @PreAuthorize("hasRole('USER')")
     public PriceResponse priceBond(@Valid @RequestBody PriceRequest priceRequest) {
         
         Bond bond = getBondFromPriceRequest(priceRequest);
         
+         //gets the curve for the corresponding currency and valuation date
         Curve curve = curveRepository.findByCurveDateAndCurrency(priceRequest.getValuationDate(), priceRequest.getCurrency()).orElseThrow(
                 () -> new ResourceNotFoundException("Curve", "curveDate", priceRequest.getValuationDate(), "currency", priceRequest.getCurrency()));
         
         return bondService.price(bond, curve);
     }
-
+    //gets the bond attributes from the client price request
     public Bond getBondFromPriceRequest(PriceRequest request) {
         Bond bond = new Bond();
         bond.setIsin(request.getIsin());

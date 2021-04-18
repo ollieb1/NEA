@@ -34,7 +34,7 @@ import com.oblair.nea.application.security.JwtTokenProvider;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
-
+//Main Spring Security interface for authenticating a user.
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -51,6 +51,7 @@ public class AuthenticationController {
     JwtTokenProvider tokenProvider;
 
     @PostMapping("/signin")
+    //manages the sign in functionality
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -76,7 +77,7 @@ public class AuthenticationController {
             return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
         }
 
-        // Creating user's account
+        // Creating new user's account
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(), signUpRequest.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) // automatically populates createdAt and updatedAt when we persist an entity
 @JsonIgnoreProperties(
         value = {"createdAt", "updatedAt"},
         allowGetters = true

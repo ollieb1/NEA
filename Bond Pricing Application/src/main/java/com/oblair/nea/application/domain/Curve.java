@@ -49,7 +49,6 @@ public class Curve extends UserAudit {
     @NotNull
     private InterpolationType type;
 
-//    @JsonManagedReference
     @OneToMany(mappedBy = "curve", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @Fetch(FetchMode.SELECT)
     private List<CurvePoint> points = new ArrayList<>();

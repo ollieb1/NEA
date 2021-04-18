@@ -3,6 +3,7 @@ import './ServerError.css';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 
+{/* If there is a server error catches error and prompts user to be returned to home page*/}
 class ServerError extends Component {
     render() {
         return (
@@ -20,3 +21,4 @@ class ServerError extends Component {
 }
 
 export default ServerError;
+

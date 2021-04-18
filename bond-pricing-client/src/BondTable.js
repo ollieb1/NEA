@@ -47,6 +47,7 @@ const columns = [
     },
   ];
 
+{/* Sets up and populates the table on home screen */}
 class BondTable extends Component {
     constructor(props) {
         super(props);
@@ -69,6 +70,8 @@ class BondTable extends Component {
 
     loadBonds(page = 1, size = BOND_LIST_SIZE) {
         
+      if(this.props.currentUser) {
+        // only loads them if a user is signed in
         let promise = getAllBonds(page, size);
         if (!promise) {
             return;
@@ -95,7 +98,7 @@ class BondTable extends Component {
                 loading: false
             })
         });  
-        
+      }
     }
 
     handleTableChange = (pagination, filters, sorter) => {

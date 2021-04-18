@@ -20,30 +20,34 @@ import com.oblair.nea.application.security.UserAuthority;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-
+//Contains APIs for login and sign up.
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
+    //gets user information
     public UserSummary getCurrentUser(@CurrentUser UserAuthority currentUser) {
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
         return userSummary;
     }
 
     @GetMapping("/user/checkUsernameAvailability")
+    //checks for user name availability
     public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
         Boolean isAvailable = !userRepository.existsByUsername(username);
         return new UserIdentityAvailability(isAvailable);
     }
 
     @GetMapping("/user/checkEmailAvailability")
+    //checks for email availability
     public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
         Boolean isAvailable = !userRepository.existsByEmail(email);
         return new UserIdentityAvailability(isAvailable);
     }
 
     @GetMapping("/users/{username}")
+    //gets user profile
     public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));

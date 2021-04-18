@@ -30,8 +30,9 @@ public class BondService {
     private static final Logger logger = LoggerFactory.getLogger(BondService.class);
 
     public PriceResponse price(Bond bond, Curve curve) {
-
-        LocalDate valuationDate = curve.getCurveDate().toLocalDate();
+        
+        //converts the dates into a format which is usable 
+        LocalDate valuationDate = curve.getCurveDate().toLocalDate(); 
         LocalDate maturity = bond.getMaturityDate().toLocalDate();
         
         List<LocalDate> coupons = calculateCouponDates(bond, curve.getCurveDate().toLocalDate());
@@ -55,12 +56,15 @@ public class BondService {
             }
             flow.setDate(Date.valueOf(date));
             flow.setRate(rate);
+            //calculates the discount factors
             flow.setDiscountFactor(Math.pow(1 + rate / curve.getFrequency().getDivisor(), -curve.getFrequency().getDivisor() * offset / bond.getDaysInYear()));
+            //calculates the discounted amounts
             flow.setDiscountedAmount(flow.getDiscountFactor() * flow.getAmount());
             logger.info("offset: " + offset + " " + flow);
             return flow;
             
         }).collect(Collectors.toList());
+        //adds all cashflows up
         double pv = cashflows.stream().mapToDouble(flow -> flow.getAmount() * flow.getDiscountFactor()).sum();
         
         PriceResponse response = new PriceResponse();
@@ -72,6 +76,7 @@ public class BondService {
     }
 
     private List<LocalDate> calculateCouponDates(Bond bond, LocalDate valuationDate) {
+        //calculates the dates for which the cashflows are to be paid on
         
         LocalDate maturity = bond.getMaturityDate().toLocalDate();
         LocalDate issueDate = bond.getIssueDate().toLocalDate();

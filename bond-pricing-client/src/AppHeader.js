@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Layout, Menu, Dropdown } from 'antd';
-import { HomeOutlined, UserOutlined, DownOutlined, EditOutlined, LineChartOutlined, SlidersOutlined }  from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, DownOutlined, EditOutlined, SlidersOutlined }  from '@ant-design/icons';
 
 import 'antd/dist/antd.css';
 import './AppHeader.css';
 
-
+{/* Class relating to header at top of each page */}
 class AppHeader extends Component {
     constructor(props) {
         super(props);   
@@ -21,6 +21,7 @@ class AppHeader extends Component {
 
     render() {
         let menuItems;
+    {/* Loads the home button, profile drop-down and the add menu */}
         if(this.props.currentUser) {
             menuItems = [
                 <Menu.Item key="/">
@@ -40,7 +41,7 @@ class AppHeader extends Component {
                 </Menu.Item>
             ]; 
           } else {
-  
+  {/* If user not logged in they only have login button in app header */}
             menuItems = [
                 <Menu.Item key="/login">
                     <Link to="/login">Login</Link>
@@ -65,6 +66,7 @@ class AppHeader extends Component {
     }
 }
 
+{/* Functionality of the profile dropdown menu */}
 const ProfileDropdownMenu = (props) => {
     
     const dropdownMenu = (
@@ -99,6 +101,7 @@ const ProfileDropdownMenu = (props) => {
     );
   }
 
+{/* Functionality of the add dropdown menu */}
 const AddDropdownMenu = (props) => {
     
     const dropdownMenu = (

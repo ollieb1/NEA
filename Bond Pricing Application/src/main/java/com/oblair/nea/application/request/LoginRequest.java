@@ -3,6 +3,7 @@ package com.oblair.nea.application.request;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
+    //Handles the login request received from the front-end client
     @NotBlank
     private String usernameOrEmail;
 

@@ -30,6 +30,7 @@ class LoginForm extends Component {
         login(loginRequest)
         .then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+            {/* Sets the access token allowing the user to access the application */}
             this.props.onLogin();
         }).catch(error => {
             if(error.status === 401) {

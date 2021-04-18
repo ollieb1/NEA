@@ -12,6 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.oblair.nea.application.security.UserAuthority;
 
+/*
+To enable JPA Auditing, it is necessary to add @EnableJpaAuditing annotation 
+This class contains all auditing related configurations
+ */
+
 @Configuration
 @EnableJpaAuditing
 public class AuditConfig {

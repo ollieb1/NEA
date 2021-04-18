@@ -26,13 +26,13 @@ class BondInfo extends Component {
         this.setState({
             isLoading: true
         });
-
+{/* Popualates the form with the given bond's attributes from the database */}
         getBond(id)
         .then(response => {
             this.formRef.current.setFieldsValue({
                 isin: response.isin,
                 currency: response.currency,
-                coupon: response.coupon * 100,
+                coupon: response.coupon * 100, 
                 frequency: response.frequency,
                 dayCount: response.dayCount,
                 issueDate: moment.utc(response.issueDate),
@@ -65,9 +65,11 @@ class BondInfo extends Component {
     }
 
     handleSubmit(values) {
+        {/* Functionality for when user presses price */}
         const priceRequest = Object.assign({}, values);
         price(priceRequest)
         .then(response => {
+        {/* Returns the price, cahsflows and curve points */}
             this.setState( {
                 curve: response.curve.points,
                 cashflows: response.cashFlows,
@@ -76,13 +78,17 @@ class BondInfo extends Component {
                            
         }).catch(error => {
             notification.error({
-                    message: 'TODO - something went wrong',
-                    description: 'TODO - something went wrong'
+                    message: 'Error',
+                    description: 'Something went wrong please try again'
             });                            
         });
     }
 
     render() {
+        {/* Renders the form for bond attributes. 
+            Renders the charts from the given curve points and cashflows
+            Renders the bond price on the screen
+        */}
         const { curve, cashflows, price } = this.state;
         return (
             <Form ref={this.formRef}

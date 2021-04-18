@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.oblair.nea.application.domain.User;
 
 public class UserAuthority implements UserDetails {
-	    
+//To authenticate a User or perform various role-based checks, Spring security needs to load users details
 	private Long id;
 
 	private String name;

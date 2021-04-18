@@ -23,6 +23,7 @@ public class BondApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BondApplication.class, args);
+		//spring calls this class to start the bond application as well as the web server.
 	}
 
 }

@@ -7,6 +7,7 @@ import './Profile.css';
 import NotFound from './common/NotFound';
 import ServerError from './common/ServerError';
 
+ {/* Sets up the user profile  */}
 class Profile extends Component {
     constructor(props) {
         super(props);
