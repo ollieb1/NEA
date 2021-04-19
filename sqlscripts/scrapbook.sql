@@ -1,7 +1,7 @@
 use bond_app;
 
-INSERT INTO role(name) VALUES('USER');
-INSERT INTO role(name) VALUES('ADMIN');
+INSERT INTO role(name) VALUES('ROLE_USER');
+INSERT INTO role(name) VALUES('ROLE_ADMIN');
 
 select * from role;
 select * from user;
